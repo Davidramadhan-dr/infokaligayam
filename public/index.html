@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desa Kaligayam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --hijau-tua:#27412f;
+  --hijau-sedang:#4a6b3f;
+  --hijau-muda:#8aa66f;
+  --emas-padi:#d6a445;
+  --tanah-liat:#b35a35;
+  --krem:#f3ecd9;
+  --krem-gelap:#e8dcc0;
+  --tinta:#20281f;
+  --putih:#fffdf7;
+  --garis:rgba(32,40,31,0.12);
+  --shadow:0 10px 30px rgba(32,40,31,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:var(--krem);
+  color:var(--tinta);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+h1,h2,h3,.display{font-family:'Fraunces',serif;}
+.eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  text-transform:uppercase;
+  letter-spacing:0.12em;
+  font-size:0.72rem;
+  font-weight:500;
+  color:var(--tanah-liat);
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+button{font-family:inherit;cursor:pointer;}
+
+/* ===== Topographic contour motif (signature element) ===== */
+.kontur{
+  width:100%;
+  display:block;
+  line-height:0;
+}
+.kontur svg{width:100%;height:auto;display:block;}
+
+/* ===== Nav ===== */
+header.nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:rgba(243,236,217,0.92);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--garis);
+}
+.nav-inner{
+  max-width:1180px;margin:0 auto;padding:16px 24px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-weight:600;font-size:1.25rem;color:var(--hijau-tua);}
+.logo-mark{width:34px;height:34px;flex-shrink:0;}
+.nav-links{display:flex;gap:6px;align-items:center;}
+.nav-links a, .nav-links button.navlink{
+  font-size:0.92rem;font-weight:600;color:var(--hijau-tua);
+  padding:9px 14px;border-radius:999px;background:transparent;border:none;
+  transition:background .2s, color .2s;
+}
+.nav-links a:hover, .nav-links button.navlink:hover{background:var(--krem-gelap);}
+.nav-links a.active, .nav-links button.navlink.active{background:var(--hijau-tua);color:var(--putih);}
+.nav-admin{
+  font-size:0.78rem;color:var(--hijau-sedang);opacity:0.7;
+  border:1px solid var(--garis);padding:7px 13px;border-radius:999px;
+}
+.nav-admin:hover{opacity:1;border-color:var(--hijau-sedang);}
+.burger{display:none;background:none;border:none;font-size:1.5rem;color:var(--hijau-tua);}
+
+/* ===== Page sections ===== */
+main{padding-top:74px;}
+.page{display:none;animation:fade .5s ease;}
+.page.active{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+
+/* ===== HERO ===== */
+.hero{
+  position:relative;background:linear-gradient(180deg,#f7f1de 0%, var(--krem) 65%);
+  padding:64px 0 0;overflow:hidden;
+}
+.hero-inner{
+  max-width:1180px;margin:0 auto;padding:40px 24px 0;
+  display:grid;grid-template-columns:1.1fr 0.9fr;gap:40px;align-items:center;
+}
+.hero-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:22px;}
+.hero-eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--tanah-liat);}
+.hero h1{
+  font-size:clamp(2.6rem,5.2vw,4.4rem);
+  font-weight:600;line-height:1.02;color:var(--hijau-tua);letter-spacing:-0.01em;
+}
+.hero h1 em{font-style:italic;font-weight:500;color:var(--tanah-liat);}
+.hero p.lead{margin-top:22px;font-size:1.1rem;max-width:480px;color:#3a4536;}
+.hero-cta{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:999px;
+  font-weight:700;font-size:0.92rem;border:1.5px solid transparent;transition:.2s;
+}
+.btn-primary{background:var(--hijau-tua);color:var(--putih);}
+.btn-primary:hover{background:#1c3023;}
+.btn-ghost{border-color:var(--hijau-tua);color:var(--hijau-tua);}
+.btn-ghost:hover{background:var(--hijau-tua);color:var(--putih);}
+.hero-stats{display:flex;gap:28px;margin-top:46px;flex-wrap:wrap;}
+.hero-stats div{border-left:2px solid var(--tanah-liat);padding-left:12px;}
+.hero-stats .num{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:600;color:var(--hijau-tua);}
+.hero-stats .lbl{font-size:0.78rem;color:#5c6555;}
+
+.hero-art{position:relative;}
+.hero-art svg{width:100%;height:auto;}
+
+/* ===== Section heading pattern ===== */
+.sec-head{padding:64px 0 28px;text-align:left;}
+.sec-head .eyebrow{margin-bottom:10px;}
+.sec-head h2{font-size:clamp(1.8rem,3.4vw,2.6rem);font-weight:600;color:var(--hijau-tua);}
+.sec-head p{margin-top:12px;max-width:560px;color:#4a5443;}
+
+/* ===== Tentang Desa ===== */
+.tentang-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;padding:0 0 70px;align-items:start;}
+.tentang-grid .story p{margin-bottom:16px;color:#3a4536;}
+.tentang-grid .story h3{font-size:1.3rem;margin:26px 0 10px;color:var(--hijau-tua);}
+.visi-misi{background:var(--putih);border:1px solid var(--garis);border-radius:18px;padding:30px;box-shadow:var(--shadow);}
+.visi-misi h4{font-family:'Fraunces',serif;font-size:1.15rem;color:var(--tanah-liat);margin-bottom:10px;}
+.visi-misi ol{padding-left:18px;margin-top:8px;color:#3a4536;}
+.visi-misi li{margin-bottom:8px;}
+.fact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:24px;}
+.fact-card{background:var(--putih);border:1px solid var(--garis);border-radius:14px;padding:18px;}
+.fact-card .num{font-family:'Fraunces',serif;color:var(--hijau-tua);font-size:1.5rem;font-weight:600;}
+.fact-card .lbl{font-size:0.8rem;color:#5c6555;margin-top:4px;}
+
+/* ===== Kegiatan ===== */
+.filter-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:30px;}
+.filter-chip{
+  padding:8px 16px;border-radius:999px;border:1.3px solid var(--garis);
+  font-size:0.85rem;font-weight:600;background:var(--putih);color:#4a5443;
+}
+.filter-chip.active{background:var(--hijau-tua);color:var(--putih);border-color:var(--hijau-tua);}
+.kegiatan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding-bottom:70px;}
+.kegiatan-card{
+  background:var(--putih);border-radius:18px;overflow:hidden;border:1px solid var(--garis);
+  box-shadow:var(--shadow);transition:transform .25s;
+}
+.kegiatan-card:hover{transform:translateY(-4px);}
+.kegiatan-img{width:100%;height:170px;object-fit:cover;background:var(--krem-gelap);}
+.kegiatan-body{padding:20px;}
+.kegiatan-date{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--tanah-liat);text-transform:uppercase;letter-spacing:0.06em;}
+.kegiatan-body h3{font-size:1.1rem;margin:8px 0 8px;color:var(--hijau-tua);font-weight:600;}
+.kegiatan-body p{font-size:0.9rem;color:#5c6555;}
+.kegiatan-tag{display:inline-block;margin-top:12px;font-size:0.7rem;font-weight:700;background:var(--krem-gelap);color:var(--hijau-tua);padding:4px 10px;border-radius:999px;}
+.empty-state{
+  text-align:center;padding:70px 20px;color:#7a8270;border:1.5px dashed var(--garis);border-radius:18px;
+}
+.empty-state svg{width:64px;height:64px;margin:0 auto 16px;opacity:0.5;}
+
+/* ===== Alamat ===== */
+.alamat-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;padding-bottom:70px;align-items:start;}
+.alamat-card{background:var(--putih);border:1px solid var(--garis);border-radius:18px;padding:30px;box-shadow:var(--shadow);}
+.alamat-row{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--garis);}
+.alamat-row:last-child{border-bottom:none;}
+.alamat-icon{width:38px;height:38px;border-radius:10px;background:var(--krem-gelap);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--hijau-tua);}
+.alamat-row .lbl{font-size:0.74rem;text-transform:uppercase;letter-spacing:0.06em;color:#8a927e;font-family:'JetBrains Mono',monospace;}
+.alamat-row .val{font-weight:600;color:var(--tinta);margin-top:3px;}
+.map-frame{border-radius:18px;overflow:hidden;border:1px solid var(--garis);box-shadow:var(--shadow);height:100%;min-height:380px;}
+.map-frame iframe{width:100%;height:100%;min-height:380px;border:0;}
+
+/* ===== Struktur ===== */
+.struktur-wrap{padding-bottom:80px;}
+.struk-top{display:flex;justify-content:center;margin-bottom:6px;}
+.struk-card{
+  background:var(--putih);border:1.5px solid var(--garis);border-radius:16px;padding:18px 22px;
+  text-align:center;min-width:190px;box-shadow:var(--shadow);
+}
+.struk-card.lead{border-color:var(--hijau-tua);background:var(--hijau-tua);color:var(--putih);}
+.struk-card .role{font-family:'JetBrains Mono',monospace;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.08em;opacity:0.7;}
+.struk-card.lead .role{color:var(--emas-padi);opacity:1;}
+.struk-card .name{font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;margin-top:4px;}
+.struk-connector{display:flex;justify-content:center;}
+.struk-connector svg{height:36px;}
+.struk-row2{display:flex;justify-content:center;gap:24px;margin-bottom:6px;flex-wrap:wrap;}
+.struk-row3{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:10px;}
+.struk-row3 .struk-card{min-width:0;}
+
+/* ===== Footer ===== */
+footer{background:var(--hijau-tua);color:var(--putih);padding:56px 0 30px;margin-top:40px;}
+.footer-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:40px;}
+footer h4{font-family:'Fraunces',serif;font-size:1.05rem;margin-bottom:14px;color:var(--emas-padi);}
+footer p, footer a{color:rgba(255,253,247,0.78);font-size:0.9rem;}
+footer ul{list-style:none;}
+footer li{margin-bottom:8px;}
+footer a:hover{color:var(--putih);}
+.footer-bottom{
+  border-top:1px solid rgba(255,253,247,0.15);margin-top:40px;padding-top:22px;
+  display:flex;justify-content:space-between;font-size:0.78rem;color:rgba(255,253,247,0.55);flex-wrap:wrap;gap:10px;
+}
+
+/* ===== Admin login ===== */
+.admin-login-wrap{min-height:80vh;display:flex;align-items:center;justify-content:center;padding:60px 24px;}
+.login-card{
+  background:var(--putih);border-radius:20px;padding:44px;max-width:380px;width:100%;
+  border:1px solid var(--garis);box-shadow:var(--shadow);
+}
+.login-card .eyebrow{margin-bottom:8px;}
+.login-card h2{font-size:1.6rem;color:var(--hijau-tua);margin-bottom:6px;}
+.login-card p.sub{color:#6a7360;font-size:0.88rem;margin-bottom:26px;}
+.field{margin-bottom:18px;}
+.field label{font-size:0.8rem;font-weight:700;color:var(--hijau-tua);display:block;margin-bottom:7px;}
+.field input, .field textarea{
+  width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid var(--garis);
+  font-family:inherit;font-size:0.95rem;background:var(--krem);
+}
+.field input:focus, .field textarea:focus{outline:2px solid var(--hijau-sedang);outline-offset:1px;border-color:var(--hijau-sedang);}
+.login-error{color:var(--tanah-liat);font-size:0.82rem;margin-top:-8px;margin-bottom:14px;display:none;}
+.hint-box{margin-top:20px;background:var(--krem-gelap);border-radius:10px;padding:12px 14px;font-size:0.78rem;color:#5c6555;}
+.hint-box code{font-family:'JetBrains Mono',monospace;background:var(--putih);padding:2px 6px;border-radius:5px;}
+
+/* ===== Admin dashboard ===== */
+.dash-bar{
+  background:var(--hijau-tua);color:var(--putih);padding:18px 0;
+}
+.dash-bar .wrap{display:flex;justify-content:space-between;align-items:center;}
+.dash-bar h2{font-size:1.2rem;color:var(--putih);}
+.dash-bar .eyebrow{color:var(--emas-padi);}
+.logout-btn{
+  background:rgba(255,253,247,0.12);color:var(--putih);border:1px solid rgba(255,253,247,0.3);
+  padding:9px 16px;border-radius:999px;font-size:0.82rem;font-weight:600;
+}
+.logout-btn:hover{background:rgba(255,253,247,0.22);}
+.dash-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:36px;padding:40px 0 80px;}
+.dash-form{background:var(--putih);border:1px solid var(--garis);border-radius:18px;padding:28px;box-shadow:var(--shadow);height:fit-content;}
+.dash-form h3{color:var(--hijau-tua);margin-bottom:18px;font-size:1.15rem;}
+.upload-box{
+  border:1.5px dashed var(--garis);border-radius:12px;padding:18px;text-align:center;cursor:pointer;
+  background:var(--krem);transition:.2s;
+}
+.upload-box:hover{border-color:var(--hijau-sedang);}
+.upload-box img{max-height:120px;margin:0 auto;border-radius:8px;}
+.upload-box .ph{color:#8a927e;font-size:0.85rem;}
+.submit-btn{
+  width:100%;background:var(--hijau-tua);color:var(--putih);padding:13px;border-radius:10px;
+  border:none;font-weight:700;font-size:0.92rem;margin-top:6px;
+}
+.submit-btn:hover{background:#1c3023;}
+.dash-list h3{color:var(--hijau-tua);margin-bottom:18px;font-size:1.15rem;}
+.dash-item{
+  background:var(--putih);border:1px solid var(--garis);border-radius:14px;padding:14px;
+  display:flex;gap:14px;align-items:center;margin-bottom:12px;
+}
+.dash-item img{width:64px;height:64px;border-radius:9px;object-fit:cover;flex-shrink:0;background:var(--krem-gelap);}
+.dash-item .info{flex:1;min-width:0;}
+.dash-item .info h4{font-size:0.95rem;color:var(--tinta);font-weight:700;}
+.dash-item .info .meta{font-size:0.76rem;color:#8a927e;font-family:'JetBrains Mono',monospace;margin-top:2px;}
+.dash-item .info p{font-size:0.82rem;color:#5c6555;margin-top:4px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;}
+.del-btn{
+  background:none;border:1.3px solid var(--garis);color:var(--tanah-liat);width:32px;height:32px;
+  border-radius:8px;flex-shrink:0;font-size:0.9rem;
+}
+.del-btn:hover{background:var(--tanah-liat);color:var(--putih);border-color:var(--tanah-liat);}
+.toast{
+  position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--hijau-tua);color:var(--putih);padding:13px 22px;border-radius:999px;
+  font-size:0.86rem;font-weight:600;opacity:0;pointer-events:none;transition:.3s;z-index:2000;box-shadow:var(--shadow);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+@media(max-width:880px){
+  .nav-links{display:none;}
+  .burger{display:block;}
+  .hero-inner{grid-template-columns:1fr;}
+  .tentang-grid, .alamat-grid, .dash-grid{grid-template-columns:1fr;}
+  .kegiatan-grid{grid-template-columns:1fr 1fr;}
+  .struk-row3{grid-template-columns:1fr 1fr;}
+  .footer-grid{grid-template-columns:1fr;}
+}
+@media(max-width:560px){
+  .kegiatan-grid{grid-template-columns:1fr;}
+  .struk-row2{flex-direction:column;align-items:center;}
+  .struk-row3{grid-template-columns:1fr;}
+  .hero-stats{gap:20px;}
+}
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important;transition:none !important;}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="logo">
+      <svg class="logo-mark" viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="19" stroke="#27412f" stroke-width="1.5"/>
+        <path d="M6 24c4-3 8 3 12 0s8-3 12 0" stroke="#27412f" stroke-width="1.5" fill="none"/>
+        <path d="M6 19c4-3 8 3 12 0s8-3 12 0" stroke="#d6a445" stroke-width="1.5" fill="none"/>
+        <path d="M20 8v8" stroke="#b35a35" stroke-width="1.5"/>
+        <circle cx="20" cy="6.5" r="2" fill="#b35a35"/>
+      </svg>
+      Kaligayam
+    </div>
+    <nav class="nav-links" id="navLinks">
+      <button class="navlink active" data-page="beranda">Beranda</button>
+      <button class="navlink" data-page="tentang">Tentang Desa</button>
+      <button class="navlink" data-page="kegiatan">Kegiatan</button>
+      <button class="navlink" data-page="alamat">Alamat</button>
+      <button class="navlink" data-page="struktur">Struktur</button>
+    </nav>
+    <a class="nav-admin" id="adminEntry" href="#admin">Admin</a>
+    <button class="burger" id="burgerBtn" aria-label="Menu">&#9776;</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ BERANDA ============ -->
+  <section class="page active" id="page-beranda">
+    <div class="hero">
+      <div class="hero-inner">
+        <div>
+          <div class="hero-eyebrow"><span class="dot"></span><span class="eyebrow">Kabupaten · Provinsi Jawa Barat</span></div>
+          <h1>Selamat datang<br>di <em>Desa Kaligayam</em></h1>
+          <p class="lead">Desa berundak di antara sawah dan perbukitan hijau — tempat tradisi, gotong royong, dan hasil bumi berjalan beriringan dari generasi ke generasi.</p>
+          <div class="hero-cta">
+            <button class="btn btn-primary navlink" data-page="kegiatan">Lihat Kegiatan Desa</button>
+            <button class="btn btn-ghost navlink" data-page="tentang">Kenali Desa Kami</button>
+          </div>
+          <div class="hero-stats">
+            <div><div class="num">1.842</div><div class="lbl">Jiwa Penduduk</div></div>
+            <div><div class="num">6</div><div class="lbl">Dusun</div></div>
+            <div><div class="num">214 Ha</div><div class="lbl">Luas Wilayah</div></div>
+          </div>
+        </div>
+        <div class="hero-art">
+          <svg viewBox="0 0 480 420" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 320 Q120 280 240 320 T480 320 V420 H0 Z" fill="#8aa66f" opacity="0.35"/>
+            <path d="M0 350 Q120 310 240 350 T480 350 V420 H0 Z" fill="#4a6b3f" opacity="0.5"/>
+            <path d="M0 380 Q120 350 240 380 T480 380 V420 H0 Z" fill="#27412f"/>
+            <g stroke="#d6a445" stroke-width="1.4" opacity="0.7" fill="none">
+              <path d="M30 240 Q120 210 230 240 T430 230"/>
+              <path d="M20 270 Q130 250 240 275 T440 260"/>
+              <path d="M10 300 Q140 285 250 305 T450 295"/>
+            </g>
+            <g transform="translate(120,150)">
+              <path d="M0 60 L40 0 L80 60 Z" fill="#b35a35"/>
+              <path d="M10 60 L40 14 L70 60 Z" fill="#27412f"/>
+              <rect x="34" y="40" width="12" height="20" fill="#d6a445"/>
+            </g>
+            <g transform="translate(220,170)">
+              <path d="M0 70 L46 0 L92 70 Z" fill="#27412f"/>
+              <path d="M12 70 L46 16 L80 70 Z" fill="#4a6b3f"/>
+              <rect x="38" y="46" width="16" height="24" fill="#d6a445"/>
+            </g>
+            <g transform="translate(300,150)">
+              <path d="M0 60 L36 0 L72 60 Z" fill="#b35a35"/>
+              <path d="M9 60 L36 13 L63 60 Z" fill="#27412f"/>
+            </g>
+            <circle cx="400" cy="70" r="34" fill="#d6a445" opacity="0.85"/>
+            <g stroke="#27412f" stroke-width="2" opacity="0.4">
+              <path d="M60 110 q10 -18 22 0" fill="none"/>
+              <path d="M350 130 q10 -18 22 0" fill="none"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="kontur">
+      <svg viewBox="0 0 1200 40" preserveAspectRatio="none"><path d="M0 20 Q150 0 300 20 T600 20 T900 20 T1200 20 V40 H0 Z" fill="#27412f" opacity="0.06"/></svg>
+    </div>
+
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Sekilas Desa</div>
+        <h2>Tiga hal yang membentuk Kaligayam</h2>
+      </div>
+      <div class="fact-grid" style="grid-template-columns:repeat(3,1fr);margin-top:0;">
+        <div class="fact-card">
+          <div class="num">🌾</div>
+          <div class="lbl" style="font-size:0.95rem;font-weight:700;color:var(--hijau-tua);margin-top:8px;">Sawah Berundak</div>
+          <div class="lbl" style="margin-top:6px;">Sistem terasering yang menopang ekonomi pertanian sejak puluhan tahun.</div>
+        </div>
+        <div class="fact-card">
+          <div class="num">🤝</div>
+          <div class="lbl" style="font-size:0.95rem;font-weight:700;color:var(--hijau-tua);margin-top:8px;">Gotong Royong</div>
+          <div class="lbl" style="margin-top:6px;">Kegiatan warga rutin digerakkan bersama, dari kerja bakti hingga panen raya.</div>
+        </div>
+        <div class="fact-card">
+          <div class="num">🏞️</div>
+          <div class="lbl" style="font-size:0.95rem;font-weight:700;color:var(--hijau-tua);margin-top:8px;">Alam Asri</div>
+          <div class="lbl" style="margin-top:6px;">Dikelilingi perbukitan hijau dan udara sejuk sepanjang tahun.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TENTANG ============ -->
+  <section class="page" id="page-tentang">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Tentang Kami</div>
+        <h2>Tentang Desa Kaligayam</h2>
+        <p>Mengenal sejarah, visi, dan karakter desa yang menjadi tempat tinggal kami.</p>
+      </div>
+      <div class="tentang-grid">
+        <div class="story">
+          <p>Desa Kaligayam terletak di kaki perbukitan dengan hamparan sawah berundak yang menjadi sumber penghidupan utama warganya. Nama "Kaligayam" berasal dari gabungan kata <em>kali</em> (sungai) dan <em>gayam</em>, pohon besar yang dahulu tumbuh subur di tepi aliran sungai yang membelah desa.</p>
+          <p>Sejak berdiri, desa ini berkembang sebagai kawasan agraris dengan hasil utama padi, palawija, dan hasil kebun. Tradisi gotong royong masih dijaga kuat hingga kini — mulai dari kerja bakti membersihkan saluran irigasi hingga perayaan panen raya yang melibatkan seluruh dusun.</p>
+          <h3>Visi</h3>
+          <p>Mewujudkan Desa Kaligayam yang mandiri, asri, dan sejahtera berbasis potensi pertanian dan kearifan lokal.</p>
+        </div>
+        <div>
+          <div class="visi-misi">
+            <h4>Misi Desa</h4>
+            <ol>
+              <li>Meningkatkan kualitas infrastruktur dan irigasi pertanian.</li>
+              <li>Mendorong UMKM dan hasil olahan bumi desa.</li>
+              <li>Menjaga kelestarian lingkungan dan sawah berundak.</li>
+              <li>Memperkuat gotong royong dan partisipasi warga.</li>
+              <li>Meningkatkan layanan publik yang transparan dan responsif.</li>
+            </ol>
+          </div>
+          <div class="fact-grid">
+            <div class="fact-card"><div class="num">1.842</div><div class="lbl">Jumlah Penduduk</div></div>
+            <div class="fact-card"><div class="num">612</div><div class="lbl">Kepala Keluarga</div></div>
+            <div class="fact-card"><div class="num">6</div><div class="lbl">Dusun</div></div>
+            <div class="fact-card"><div class="num">214 Ha</div><div class="lbl">Luas Wilayah</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ KEGIATAN ============ -->
+  <section class="page" id="page-kegiatan">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Dokumentasi</div>
+        <h2>Kegiatan Desa</h2>
+        <p>Rangkaian aktivitas dan agenda warga Desa Kaligayam, diperbarui langsung oleh admin desa.</p>
+      </div>
+      <div class="filter-row" id="filterRow"></div>
+      <div class="kegiatan-grid" id="kegiatanGrid"></div>
+    </div>
+  </section>
+
+  <!-- ============ ALAMAT ============ -->
+  <section class="page" id="page-alamat">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Kontak & Lokasi</div>
+        <h2>Alamat Lengkap Desa</h2>
+        <p>Informasi alamat dan kontak resmi kantor Desa Kaligayam.</p>
+      </div>
+      <div class="alamat-grid">
+        <div class="alamat-card">
+          <div class="alamat-row">
+            <div class="alamat-icon">📍</div>
+            <div><div class="lbl">Alamat Kantor Desa</div><div class="val">Jl. Raya Kaligayam No. 12, Dusun Krajan, Desa Kaligayam,<br>Kec. Sukamaju, Kab. Tasikmalaya, Jawa Barat 46472</div></div>
+          </div>
+          <div class="alamat-row">
+            <div class="alamat-icon">☎️</div>
+            <div><div class="lbl">Telepon</div><div class="val">(0265) 123-4567</div></div>
+          </div>
+          <div class="alamat-row">
+            <div class="alamat-icon">✉️</div>
+            <div><div class="lbl">Email</div><div class="val">desa.kaligayam@email.go.id</div></div>
+          </div>
+          <div class="alamat-row">
+            <div class="alamat-icon">🕐</div>
+            <div><div class="lbl">Jam Pelayanan</div><div class="val">Senin–Jumat, 08.00–15.00 WIB</div></div>
+          </div>
+          <div class="alamat-row">
+            <div class="alamat-icon">🗺️</div>
+            <div><div class="lbl">Kode Pos</div><div class="val">46472</div></div>
+          </div>
+        </div>
+        <div class="map-frame">
+          <iframe loading="lazy" src="https://maps.google.com/maps?q=Tasikmalaya%2C%20Jawa%20Barat&output=embed" title="Peta Lokasi Desa Kaligayam"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STRUKTUR ============ -->
+  <section class="page" id="page-struktur">
+    <div class="wrap struktur-wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Pemerintahan Desa</div>
+        <h2>Struktur Organisasi</h2>
+        <p>Susunan perangkat Desa Kaligayam masa bakti 2024–2030.</p>
+      </div>
+
+      <div class="struk-top">
+        <div class="struk-card lead"><div class="role">Kepala Desa</div><div class="name">H. Asep Sudrajat</div></div>
+      </div>
+      <div class="struk-connector"><svg viewBox="0 0 40 36"><path d="M20 0 V36" stroke="#27412f" stroke-width="1.5" opacity="0.4"/></svg></div>
+      <div class="struk-row2">
+        <div class="struk-card"><div class="role">Sekretaris Desa</div><div class="name">Dedi Hermawan</div></div>
+        <div class="struk-card"><div class="role">Bendahara Desa</div><div class="name">Rina Marlina</div></div>
+      </div>
+      <div class="struk-connector"><svg viewBox="0 0 40 36"><path d="M20 0 V36" stroke="#27412f" stroke-width="1.5" opacity="0.4"/></svg></div>
+      <div class="struk-row3">
+        <div class="struk-card"><div class="role">Kaur Pemerintahan</div><div class="name">Yayan Sopian</div></div>
+        <div class="struk-card"><div class="role">Kaur Kesra</div><div class="name">Nuraeni</div></div>
+        <div class="struk-card"><div class="role">Kasi Pelayanan</div><div class="name">Iwan Setiawan</div></div>
+        <div class="struk-card"><div class="role">Kasi Pembangunan</div><div class="name">Tati Suryati</div></div>
+      </div>
+      <div class="struk-connector"><svg viewBox="0 0 40 36"><path d="M20 0 V36" stroke="#27412f" stroke-width="1.5" opacity="0.4"/></svg></div>
+      <div class="struk-row3">
+        <div class="struk-card"><div class="role">Kadus Krajan</div><div class="name">Ujang Komara</div></div>
+        <div class="struk-card"><div class="role">Kadus Cisalak</div><div class="name">Maman Suherman</div></div>
+        <div class="struk-card"><div class="role">Kadus Sukamulya</div><div class="name">Endang Suparman</div></div>
+        <div class="struk-card"><div class="role">Kadus Margamulya</div><div class="name">Sri Wahyuni</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ADMIN LOGIN ============ -->
+  <section class="page" id="page-admin">
+    <div class="admin-login-wrap">
+      <div class="login-card">
+        <div class="eyebrow">Khusus Admin Desa</div>
+        <h2>Masuk ke Dashboard</h2>
+        <p class="sub">Login untuk mengelola data Kegiatan Desa Kaligayam.</p>
+        <form id="loginForm">
+          <div class="field">
+            <label for="loginUser">Username</label>
+            <input type="text" id="loginUser" autocomplete="username" required>
+          </div>
+          <div class="field">
+            <label for="loginPass">Kata Sandi</label>
+            <input type="password" id="loginPass" autocomplete="current-password" required>
+          </div>
+          <div class="login-error" id="loginError">Username atau kata sandi salah. Coba lagi.</div>
+          <button type="submit" class="submit-btn">Masuk</button>
+        </form>
+        <div class="hint-box">Akun admin diatur lewat file <code>.env</code> di server (variabel <code>ADMIN_USER</code> &amp; <code>ADMIN_PASS</code>). Default demo: <code>admin</code> / <code>kaligayam2026</code>.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ADMIN DASHBOARD ============ -->
+  <section class="page" id="page-dashboard">
+    <div class="dash-bar">
+      <div class="wrap">
+        <div>
+          <div class="eyebrow">Dashboard Admin</div>
+          <h2>Kelola Kegiatan Desa</h2>
+        </div>
+        <button class="logout-btn" id="logoutBtn">Keluar</button>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="dash-grid">
+        <div class="dash-form">
+          <h3>Tambah Kegiatan Baru</h3>
+          <form id="kegiatanForm">
+            <div class="field">
+              <label>Foto Kegiatan</label>
+              <label class="upload-box" id="uploadBox">
+                <input type="file" id="fotoInput" accept="image/*" style="display:none;">
+                <div id="uploadPreview"><div class="ph">Klik untuk unggah foto (opsional)</div></div>
+              </label>
+            </div>
+            <div class="field">
+              <label for="judulInput">Judul Kegiatan</label>
+              <input type="text" id="judulInput" placeholder="cth. Kerja Bakti Saluran Irigasi" required>
+            </div>
+            <div class="field">
+              <label for="kategoriInput">Kategori</label>
+              <input type="text" id="kategoriInput" placeholder="cth. Gotong Royong" required>
+            </div>
+            <div class="field">
+              <label for="tanggalInput">Tanggal</label>
+              <input type="date" id="tanggalInput" required>
+            </div>
+            <div class="field">
+              <label for="deskripsiInput">Deskripsi</label>
+              <textarea id="deskripsiInput" rows="4" placeholder="Ceritakan singkat kegiatan ini..." required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Unggah Kegiatan</button>
+          </form>
+        </div>
+        <div class="dash-list">
+          <h3 id="dashListTitle">Daftar Kegiatan (0)</h3>
+          <div id="dashItems"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div>
+      <div class="logo" style="color:var(--putih);"><svg class="logo-mark" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="19" stroke="#fffdf7" stroke-width="1.5"/><path d="M6 24c4-3 8 3 12 0s8-3 12 0" stroke="#fffdf7" stroke-width="1.5" fill="none"/><path d="M6 19c4-3 8 3 12 0s8-3 12 0" stroke="#d6a445" stroke-width="1.5" fill="none"/></svg>Desa Kaligayam</div>
+      <p style="margin-top:14px;max-width:280px;">Situs resmi informasi dan layanan Desa Kaligayam, Kecamatan Sukamaju, Kabupaten Tasikmalaya.</p>
+    </div>
+    <div>
+      <h4>Jelajahi</h4>
+      <ul>
+        <li><a href="#" class="navlink" data-page="tentang">Tentang Desa</a></li>
+        <li><a href="#" class="navlink" data-page="kegiatan">Kegiatan</a></li>
+        <li><a href="#" class="navlink" data-page="alamat">Alamat</a></li>
+        <li><a href="#" class="navlink" data-page="struktur">Struktur Desa</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Kontak</h4>
+      <ul>
+        <li>(0265) 123-4567</li>
+        <li>desa.kaligayam@email.go.id</li>
+        <li>Jl. Raya Kaligayam No. 12</li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© 2026 Pemerintah Desa Kaligayam.</span>
+    <span>Dibuat untuk warga, oleh warga.</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============ STATE ============ */
+let kegiatanData = [];
+let authToken = localStorage.getItem('kaligayam_token') || null;
+let isLoggedIn = !!authToken;
+let activeFilter = "Semua";
+
+const $ = (s,el=document)=>el.querySelector(s);
+const $$ = (s,el=document)=>[...el.querySelectorAll(s)];
+
+/* ============ ROUTING ============ */
+function goTo(page){
+  $$('.page').forEach(p=>p.classList.remove('active'));
+  const target = $('#page-'+page);
+  if(!target) return;
+  if(page==='dashboard' && !isLoggedIn){ page='admin'; }
+  $('#page-'+page).classList.add('active');
+  $$('.navlink').forEach(n=>n.classList.toggle('active', n.dataset.page===page));
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(page==='kegiatan') loadKegiatan();
+  if(page==='dashboard') loadDashboard();
+}
+
+$$('.navlink').forEach(btn=>{
+  btn.addEventListener('click', e=>{
+    e.preventDefault();
+    goTo(btn.dataset.page);
+  });
+});
+$('#adminEntry').addEventListener('click', e=>{
+  e.preventDefault();
+  goTo(isLoggedIn ? 'dashboard' : 'admin');
+});
+$('#burgerBtn').addEventListener('click', ()=>{
+  const nav = $('#navLinks');
+  nav.style.display = nav.style.display==='flex' ? 'none' : 'flex';
+  nav.style.cssText += 'flex-direction:column;position:fixed;top:66px;left:16px;right:16px;background:#fffdf7;border-radius:14px;padding:14px;box-shadow:0 10px 30px rgba(32,40,31,0.18);z-index:999;';
+});
+
+/* ============ TOAST ============ */
+function showToast(msg){
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2400);
+}
+
+/* ============ API HELPERS ============ */
+async function apiGet(url){
+  const res = await fetch(url);
+  if(!res.ok) throw new Error((await res.json()).error || 'Gagal memuat data');
+  return res.json();
+}
+async function apiSend(url, method, body){
+  const res = await fetch(url, {
+    method,
+    headers:{
+      'Content-Type':'application/json',
+      ...(authToken ? {'Authorization':'Bearer '+authToken} : {})
+    },
+    body: body ? JSON.stringify(body) : undefined
+  });
+  const data = await res.json().catch(()=>({}));
+  if(!res.ok) throw new Error(data.error || 'Terjadi kesalahan');
+  return data;
+}
+
+/* ============ KEGIATAN PAGE ============ */
+function renderFilters(){
+  const cats = ["Semua", ...new Set(kegiatanData.map(k=>k.kategori))];
+  $('#filterRow').innerHTML = cats.map(c=>
+    `<button class="filter-chip ${c===activeFilter?'active':''}" data-cat="${c}">${c}</button>`
+  ).join('');
+  $$('.filter-chip').forEach(chip=>{
+    chip.addEventListener('click', ()=>{
+      activeFilter = chip.dataset.cat;
+      renderFilters();
+      renderKegiatanGrid();
+    });
+  });
+}
+
+function placeholderSVG(seed){
+  const colors=['#8aa66f','#d6a445','#b35a35','#4a6b3f'];
+  const c = colors[seed % colors.length];
+  return `data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='400' height='240'><rect width='400' height='240' fill='${c}' opacity='0.25'/><path d='M0 180 Q100 150 200 180 T400 180 V240 H0 Z' fill='${c}' opacity='0.5'/></svg>`)}`;
+}
+
+function renderKegiatanGrid(){
+  const sorted = [...kegiatanData].sort((a,b)=> new Date(b.tanggal)-new Date(a.tanggal));
+  const filtered = activeFilter==='Semua' ? sorted : sorted.filter(k=>k.kategori===activeFilter);
+  const grid = $('#kegiatanGrid');
+  if(filtered.length===0){
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h16M4 12h10M4 17h6"/></svg>
+      Belum ada kegiatan pada kategori ini.</div>`;
+    return;
+  }
+  grid.innerHTML = filtered.map((k,i)=>`
+    <div class="kegiatan-card">
+      <img class="kegiatan-img" src="${k.foto || placeholderSVG(i)}" alt="${k.judul}">
+      <div class="kegiatan-body">
+        <div class="kegiatan-date">${formatTanggal(k.tanggal)}</div>
+        <h3>${k.judul}</h3>
+        <p>${k.deskripsi}</p>
+        <span class="kegiatan-tag">${k.kategori}</span>
+      </div>
+    </div>`).join('');
+}
+
+function formatTanggal(d){
+  const bln = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
+  const [y,m,day] = d.split('-');
+  return `${parseInt(day)} ${bln[parseInt(m)-1]} ${y}`;
+}
+
+async function loadKegiatan(){
+  try{
+    kegiatanData = await apiGet('/api/kegiatan');
+  }catch(e){
+    showToast('Gagal memuat data kegiatan dari server');
+  }
+  renderFilters();
+  renderKegiatanGrid();
+}
+
+/* ============ ADMIN LOGIN ============ */
+$('#loginForm').addEventListener('submit', async e=>{
+  e.preventDefault();
+  const username = $('#loginUser').value.trim();
+  const password = $('#loginPass').value;
+  try{
+    const data = await apiSend('/api/login', 'POST', {username, password});
+    authToken = data.token;
+    localStorage.setItem('kaligayam_token', authToken);
+    isLoggedIn = true;
+    $('#loginError').style.display='none';
+    $('#loginForm').reset();
+    goTo('dashboard');
+    showToast('Berhasil masuk sebagai admin');
+  }catch(err){
+    $('#loginError').textContent = err.message;
+    $('#loginError').style.display='block';
+  }
+});
+
+$('#logoutBtn').addEventListener('click', ()=>{
+  isLoggedIn = false;
+  authToken = null;
+  localStorage.removeItem('kaligayam_token');
+  goTo('beranda');
+  showToast('Anda telah keluar');
+});
+
+/* ============ ADMIN DASHBOARD ============ */
+let pendingFoto = "";
+
+$('#uploadBox').addEventListener('click', ()=> $('#fotoInput').click());
+$('#fotoInput').addEventListener('change', e=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ev=>{
+    pendingFoto = ev.target.result;
+    $('#uploadPreview').innerHTML = `<img src="${pendingFoto}" alt="preview">`;
+  };
+  reader.readAsDataURL(file);
+});
+
+$('#kegiatanForm').addEventListener('submit', async e=>{
+  e.preventDefault();
+  const judul = $('#judulInput').value.trim();
+  const kategori = $('#kategoriInput').value.trim();
+  const tanggal = $('#tanggalInput').value;
+  const deskripsi = $('#deskripsiInput').value.trim();
+  if(!judul || !kategori || !tanggal || !deskripsi) return;
+  try{
+    await apiSend('/api/kegiatan', 'POST', {judul, kategori, tanggal, deskripsi, foto: pendingFoto});
+    $('#kegiatanForm').reset();
+    pendingFoto = "";
+    $('#uploadPreview').innerHTML = `<div class="ph">Klik untuk unggah foto (opsional)</div>`;
+    await loadDashboard();
+    showToast('Kegiatan berhasil diunggah');
+  }catch(err){
+    if(err.message.includes('login') || err.message.includes('Sesi')){
+      isLoggedIn = false; authToken = null; localStorage.removeItem('kaligayam_token');
+      goTo('admin');
+    }
+    showToast(err.message);
+  }
+});
+
+async function renderDashboardList(){
+  $('#dashListTitle').textContent = `Daftar Kegiatan (${kegiatanData.length})`;
+  const sorted = [...kegiatanData].sort((a,b)=> new Date(b.tanggal)-new Date(a.tanggal));
+  $('#dashItems').innerHTML = sorted.map((k,i)=>`
+    <div class="dash-item">
+      <img src="${k.foto || placeholderSVG(i)}" alt="">
+      <div class="info">
+        <h4>${k.judul}</h4>
+        <div class="meta">${formatTanggal(k.tanggal)} · ${k.kategori}</div>
+        <p>${k.deskripsi}</p>
+      </div>
+      <button class="del-btn" data-id="${k.id}" title="Hapus">✕</button>
+    </div>`).join('');
+  $$('.del-btn').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      try{
+        await apiSend('/api/kegiatan/'+btn.dataset.id, 'DELETE');
+        await loadDashboard();
+        showToast('Kegiatan dihapus');
+      }catch(err){
+        showToast(err.message);
+      }
+    });
+  });
+}
+
+async function loadDashboard(){
+  if(!isLoggedIn){ goTo('admin'); return; }
+  try{
+    kegiatanData = await apiGet('/api/kegiatan');
+  }catch(e){
+    showToast('Gagal memuat data');
+  }
+  renderDashboardList();
+}
+
+/* ============ INIT ============ */
+loadKegiatan();
+</script>
+</body>
+</html>
